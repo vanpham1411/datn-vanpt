@@ -1,0 +1,132 @@
+CREATE TABLE `cart_item` (
+  `id` bigint NOT NULL,
+  `user_id` bigint NOT NULL,
+  `item_id` bigint NOT NULL,
+  `quantity` int NOT NULL,
+  PRIMARY KEY (`id`,`user_id`,`item_id`),
+  KEY `fk_cart_item_1_idx` (`user_id`),
+  KEY `fk_cart_item_2_idx` (`item_id`),
+  CONSTRAINT `fk_cart_item_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
+  CONSTRAINT `fk_cart_item_2` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `category` (
+  `category_id` bigint NOT NULL,
+  `code` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `info` text,
+  `deleted` int DEFAULT NULL,
+  PRIMARY KEY (`category_id`),
+  UNIQUE KEY `code_UNIQUE` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `item` (
+  `item_id` bigint NOT NULL,
+  `product_id` bigint NOT NULL,
+  `size` char(10) NOT NULL,
+  `type_id` bigint NOT NULL,
+  `quantity` int NOT NULL,
+  PRIMARY KEY (`item_id`,`product_id`,`type_id`),
+  KEY `fk_item_1_idx` (`product_id`),
+  KEY `fk_item_2_idx` (`type_id`),
+  CONSTRAINT `fk_item_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
+  CONSTRAINT `fk_item_2` FOREIGN KEY (`type_id`) REFERENCES `type` (`type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `layout_config` (
+  `layout_id` int NOT NULL,
+  `layout_name` varchar(45) DEFAULT NULL,
+  `layout_value` text,
+  PRIMARY KEY (`layout_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `order_item` (
+  `id` bigint NOT NULL,
+  `order_id` bigint NOT NULL,
+  `item_id` bigint NOT NULL,
+  `quantity` int NOT NULL,
+  PRIMARY KEY (`order_id`,`item_id`,`id`),
+  KEY `fk_order_item_2_idx` (`item_id`),
+  CONSTRAINT `fk_order_item_1` FOREIGN KEY (`order_id`) REFERENCES `product_order` (`order_id`),
+  CONSTRAINT `fk_order_item_2` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `product` (
+  `product_id` bigint NOT NULL,
+  `category_id` bigint NOT NULL,
+  `product_code` varchar(45) NOT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `description` text,
+  `image_url` text,
+  `create_time` timestamp NULL DEFAULT NULL,
+  `update_time` timestamp NULL DEFAULT NULL,
+  `status` int DEFAULT NULL,
+  `sold_nb` int DEFAULT NULL,
+  `quantity` int DEFAULT NULL,
+  `has_discount` tinyint DEFAULT NULL,
+  `cost` int DEFAULT NULL,
+  PRIMARY KEY (`product_id`,`category_id`),
+  KEY `fk_product_1_idx` (`category_id`),
+  FULLTEXT KEY `index3` (`description`),
+  CONSTRAINT `fk_product_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `product_order` (
+  `order_id` bigint NOT NULL,
+  `user_id` bigint NOT NULL,
+  `create_time` timestamp NULL DEFAULT NULL,
+  `status` int DEFAULT NULL,
+  `cost` bigint DEFAULT NULL,
+  `address` text,
+  `phone` varchar(45) DEFAULT NULL,
+  `user_name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`order_id`,`user_id`),
+  KEY `fk_order_1_idx` (`user_id`),
+  CONSTRAINT `fk_order_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `search_history` (
+  `id` bigint NOT NULL,
+  `user_id` bigint NOT NULL,
+  `content` text,
+  `time` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`,`user_id`),
+  KEY `fk_search_history_1_idx` (`user_id`),
+  CONSTRAINT `fk_search_history_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `type` (
+  `type_id` bigint NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `description` text,
+  PRIMARY KEY (`type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `user` (
+  `user_id` bigint NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `mobile` varchar(45) DEFAULT NULL,
+  `address` text,
+  `password` text NOT NULL,
+  `role` tinyint NOT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `view_product` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `product_id` bigint NOT NULL,
+  `user_id` bigint NOT NULL,
+  `timestamp` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`,`product_id`,`user_id`),
+  KEY `fk_view_product_1_idx` (`product_id`),
+  KEY `fk_view_product_2_idx` (`user_id`),
+  CONSTRAINT `fk_view_product_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_view_product_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
