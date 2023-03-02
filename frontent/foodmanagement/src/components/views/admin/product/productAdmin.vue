@@ -12,7 +12,7 @@
         <div class="content-action flex">
             <div class="action-left flex">
                 <div class="content-filter flex">
-                    <input placeholder="Nhập tên sản phẩm, mã thực phẩ... để tìm kiếm" type="text" ref="Filter"
+                    <input placeholder="Nhập tên sản phẩm, mã sản phẩm.. để tìm kiếm" type="text" ref="Filter"
                         id="filter" v-model="keyword"
                         v-tooltip.bottom-end="{ offset: '5px', content: 'Nhập tên sản phẩm, mã sản phẩm và nhấp Enter để tìm kiếm', classes: 'tooltip' }" @keyup.enter="getFilterPage()">
                     <div class="content-filter-search logo-icon other-icon pointer"></div>
@@ -37,7 +37,7 @@
             </div>
         </div>
         <common-table :oneAction="false" :objectName="objectName" :layoutConfig="layoutConfig" :dataList="dataList" :formShow="formShow" @closeForm="formShow=false;"
-            :actions="actions" :checkPaging="false" :displayName="displayName" @changeCrud="changeCrud" @openForm="openForm" @getFilterPage="getFilterPage" @crudObject="crudObject"
+            :actions="actions" :checkPaging="true" :displayName="displayName" @changeCrud="changeCrud" @openForm="openForm" @getFilterPage="getFilterPage" @crudObject="crudObject"
             @changeShowDeleteMulti="showDeleteMulti=$event" ref="CommonTable">
         </common-table>
     </div>
@@ -57,6 +57,7 @@ import Base from '../../../../base/Base.js';
 export default {
     components: { CommonTable, VueCombobox },
     name: 'ProductAdmin',
+    
     methods: {
 
         settingColumn() {
@@ -66,17 +67,32 @@ export default {
             this.$emit('changeLoader', value);
         },
         async getFilterPage() {
-            this.paramGet = {
+
+            console.log("default page : ", this.defaultPage)
+            if(this.defaultPage) {
+                this.$refs.CommonTable.currentPage=1;
+                this.paramGet = {
+                keyword: this.keyword,
+                parentID: this.category_model.categoryId ? this.category_model.categoryId : null,
+                pageNumber: 1,
+                pageSize: this.$refs.CommonTable.pageSize
+            };
+            }
+            else  {
+                this.paramGet = {
                 keyword: this.keyword,
                 parentID: this.category_model.categoryId ? this.category_model.categoryId : null,
                 pageNumber: this.$refs.CommonTable.currentPage,
                 pageSize: this.$refs.CommonTable.pageSize
             };
+            }
+            
             this.showDeleteMulti = false;
             this.dataList = await ProductAPI.getFilterPaging(this.paramGet);
             this.dataList.data.forEach(product => {
                 product.imageURL =this.imagepath +  product.imageURL;
             })
+            this.defaultPage = false;
         },
         async reload() {
             this.keyword = null;
@@ -229,7 +245,7 @@ export default {
                 keyword: null,
                 status: 0,
                 pageNumber: 1,
-                pageSize: 20
+                pageSize: 50
             },
             // các chức năng
             actions: [CRUD.Put, CRUD.Delete, CRUD.Read],
@@ -254,9 +270,18 @@ export default {
             category_model: null,
             showDeleteMulti: false,
             imagepath: '../../../../../data/',
+            defaultPage: false,
         }
 
-    }
+    },
+    watch: {
+        keyword() {
+            this.defaultPage = true;
+        },
+        category_model() {
+            this.defaultPage= true;
+        }
+    },
 }
 
 

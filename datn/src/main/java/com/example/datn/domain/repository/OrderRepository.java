@@ -18,8 +18,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("select o from Order o where o.status=?1")
     List<Order> getAllByStatus(int status);
 
-    @Query("select o from Order o where o.status = ?1 and o.userID = ?2")
-    List<Order> getAllByStatusAndUserId(int status, int userID);
+    @Query("select o from Order o where o.userID = ?1 and o.status = ?2 order by o.createTime desc")
+    List<Order> filterUser(long userID, int status);
     @Query(value = "select * from product_order", nativeQuery = true)
     List<Order> filterOrder( int limitValue,int offset);
 

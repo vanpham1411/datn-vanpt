@@ -1,6 +1,6 @@
 <template>
     <div class="popular-dish">
-        <h1>Popular Product</h1>
+        <h1>Sản phẩm gợi ý</h1>
         <!-- <div class="menu-dishes">
             <div class="popular-category" v-for="(category, index) in lstPopularCategory" :key="category.CategoryId" :ref="category.CategoryCode">
                 <button class="popular-category-btn" :class="{'active-dish': index==activeCategory}" @click="getFoodPopular(category.CategoryId, index)">{{category.CategoryName}}</button>
@@ -46,9 +46,18 @@
             }
         },
         async created() {
+            let user = JSON.parse(localStorage.getItem('user'));
+            let userID  = null;
+            if(user) {
+                userID = user.userID
+            }
             try {
                 // this.lstPopularCategory = await CategoryAPI.getPopularCategory();
-                this.lstProductPopular = (await ProductAPI.getAll()).data;
+                this.lstProductPopular =  (await ProductAPI.suggestion(
+            {
+                userID: userID
+            }
+        )).data.data
                 this.lstProductPopular.forEach(ele => {
                 ele.imageURL = this.imagePath + ele.imageURL;
             })

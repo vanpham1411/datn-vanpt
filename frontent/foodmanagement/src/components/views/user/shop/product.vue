@@ -38,7 +38,7 @@
                                         class="w-1/3 m-r-12"
                                         :item_text="['typeName', 'size']" 
                                         :items="productMerge.items"
-                                        :display_item="'typeName'" 
+                                        :display_item="'display'" 
                                         :groupName="['Loại', 'Kích cỡ']"
                                         :vmodel="typeModel"
                                         :multiple="false">
@@ -58,7 +58,7 @@
                         <div class="w-1/3 add-to-cart">
                             <button class="flex-center pointer" @click="addToCart"><i class="fa fa-shopping-cart m-r-12"></i> Thêm vào giỏ hàng</button>
                         </div>
-                        <div class="w-1/8" style="text-align: left;"><i class="fa fa-heart add-heart"></i></div>
+                        <!-- <div class="w-1/8" style="text-align: left;"><i class="fa fa-heart add-heart"></i></div> -->
                     </div>
                     <div class="toppings flex m-b-20" v-if="productMerge.Toppings && productMerge.Toppings.length > 0">
                         <div class="w-1/6">
@@ -195,21 +195,31 @@ export default {
             amountProduct: 0,
             typeModel :{
                 typeName:'',
-                size:''
+                size:'',
+                display:''
             }
 
         }
     },
     watch: {
         quantity() {
-            if(!this.quantity || this.quantity < 0){
+            if(!this.quantity || this.quantity < 0 && this.typeModel.quantity > 0){
                 this.quantity = 1;
             }
-            if(this.quantity > this.productMerge.product.quantity) {
-                this.quantity = this.productMerge.product.quantity;
+            // if(this.quantity > this.productMerge.product.quantity) {
+            //     this.quantity = this.productMerge.product.quantity;
+            // }
+
+            if(this.quantity > this.typeModel.quantity) {
+                this.quantity = this.typeModel.quantity;
             }
 
             this.amountProduct = this.quantity* this.productMerge.product.cost;
+        },
+        typeModel() {
+            if(this.quantity > this.typeModel.quantity) {
+                this.quantity = this.typeModel.quantity;
+            }
         }
     },
     async created() {
@@ -217,7 +227,7 @@ export default {
         this.category = (await CategoryAPI.getObjById(this.productMerge.product.categoryID)).data;
         let user = JSON.parse(localStorage.getItem('user'));
 
-        if(user) {
+        if(user && this.quantity >0) {
             let view = (await ProductAPI.viewProduct({
             userID:user.userID,
             parentID: this.$route.params.productID
@@ -239,6 +249,7 @@ export default {
 
         this.productMerge.items.forEach((el) => {
             el.typeName = el.type.name;
+            el.display = el.type.name + " - " + el.size;
         })
         this.typeModel = this.productMerge.items[0];
         console.log("type model: ", this.typeModel );

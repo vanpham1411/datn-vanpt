@@ -1,11 +1,11 @@
 <template>
 <div class="nav-top flex align-items">
-    <router-link tag="div" to="/user/home" class="logo-home pointer">Project</router-link>
+    <router-link tag="div" to="/user/home" class="logo-home pointer">Đồ Án</router-link>
     <div class="side-menu align-items">
-        <router-link tag="div" to="/user/home" class="side d-inline-block">Home</router-link>
+        <router-link tag="div" to="/user/home" class="side d-inline-block">Trang chủ</router-link>
         <!-- <router-link tag="div" to="/user/menu" class="side d-inline-block">Menu</router-link> -->
         <!-- <router-link tag="div" to="/user/about" class="side d-inline-block">About</router-link> -->
-        <router-link tag="div" to="/user/shop" class="side d-inline-block">Shop</router-link>
+        <router-link tag="div" to="/user/shop" class="side d-inline-block">Sản phẩm</router-link>
         <!-- <router-link tag="div" to="/user/blog" class="side d-inline-block">Blog</router-link> -->
         <!-- <router-link tag="div" to="/user/faq" class="side d-inline-block" v-tooltip.bottom="{content:'Câu hỏi thường gặp', classes:['tooltip'], offset: '5px'}">FAQ</router-link> -->
     </div>

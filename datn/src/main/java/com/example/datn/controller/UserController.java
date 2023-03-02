@@ -23,18 +23,18 @@ public class UserController {
 
     @PostMapping("/User")
     public ResponseEntity register(@RequestBody User user) {
-        int res =userService.signup(user);
-        if( res == 0) {
+        User res =userService.signup(user);
+        if( res != null) {
             return ResponseEntity.ok(new ResponseBody(
-                    0,
+                    res,
                     ResponseBody.Status.FAILED,
                     ResponseBody.Code.CLIENT_ERROR
             ));
         }
         return ResponseEntity.ok(new ResponseBody(
                 1,
-                ResponseBody.Status.SUCCESS,
-                ResponseBody.Code.SUCCESS
+                ResponseBody.Status.FAILED,
+                ResponseBody.Code.CLIENT_ERROR
         ));
     }
 

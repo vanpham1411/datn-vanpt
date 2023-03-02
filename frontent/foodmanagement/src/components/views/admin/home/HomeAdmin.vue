@@ -111,7 +111,13 @@ export default {
                 this.dataProductSold = [];
                 if(this.dataProductSold.length < 1){
                     this.changeLoader(true);
-                    this.dataProductSold = await ProductAPI.getProductSold(this.dateFilter.value);
+                    console.log("filter date: ", this.dateFilter.value)
+                    this.dataProductSold = await ProductAPI.getProductSold(
+                        {
+                            createDateMin: this.dateFilter.value.startDate,
+                            createDateMax: this.dateFilter.value.endDate
+                        }
+                    );
                     this.changeLoader(false);
                     console.log(this.dataProductSold);
                     this.popularProductAmount.chartData = [
@@ -121,11 +127,35 @@ export default {
                         ['Sản phẩm', 'Số lượng']
                     ]
                     if(this.dataProductSold){
-                        this.dataProductSold.forEach(ele => {
-                            ele.amount = ele.amount * ele.quantity;
+                        
+                        if(this.dataProductSold.length > 5) {
+                            let sum = this.dataProductSold[5];
+                            sum.name="Các sản phẩm khác"
+
+                            for(let i = 6; i< this.dataProductSold.length; i++) {
+                                sum.amount += this.dataProductSold[i].amount;
+                                sum.quantity += this.dataProductSold[i].quantity;
+                                sum.name="Các sản phẩm khác"
+                            }
+                            let listProduct = [];
+                            for(let i = 0; i<5;i++) {
+                                listProduct.push(this.dataProductSold[i])
+                            }
+                            listProduct.push(sum);
+                            listProduct.forEach(ele => {
+                            // ele.amount = ele.amount * ele.quantity;
                             this.popularProductAmount.chartData.push([ele.name, ele.amount])
                             this.popularProductQuantity.chartData.push([ele.name, ele.quantity])
                         })
+                        }
+                        else {
+                            this.dataProductSold.forEach(ele => {
+                            // ele.amount = ele.amount * ele.quantity;
+                            this.popularProductAmount.chartData.push([ele.name, ele.amount])
+                            this.popularProductQuantity.chartData.push([ele.name, ele.quantity])
+                        })
+                        }
+                        
                     }
                 }
             }

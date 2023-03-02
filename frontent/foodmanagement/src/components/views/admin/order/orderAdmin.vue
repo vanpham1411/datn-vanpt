@@ -12,7 +12,7 @@
         <div class="content-action flex">
             <div class="action-left flex">
                 <div class="content-filter flex">
-                    <input placeholder="Nhập tên đơn hàng, mã đơn hàng để tìm kiếm" 
+                    <input placeholder="Nhập tên người nhận để tìm kiếm" 
                             type="text" 
                             ref="Filter" 
                             id="filter"
@@ -148,7 +148,7 @@ export default {
                 status: null,
                 keyword: null,
                 pageNumber: 1,
-                pageSize: 20,
+                pageSize: 50,
                 createDateMin: null,
                 createDateMax:null,
                 userID: null,
@@ -308,7 +308,7 @@ export default {
                 status: this.orderStatusFilter.value == -1 ? null : this.orderStatusFilter.value,
                 keyword: this.keyword,
                 createDateMin: this.dateFilter.value.startDate,
-                createdDateMax: this.dateFilter.value.endDate,
+                createDateMax: this.dateFilter.value.endDate,
                 userID:null,
                 pageNumber: this.$refs.CommonTable.currentPage,
                 pageSize: this.$refs.CommonTable.pageSize

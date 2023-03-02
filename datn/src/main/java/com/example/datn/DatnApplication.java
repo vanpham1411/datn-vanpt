@@ -68,7 +68,7 @@ public class DatnApplication implements CommandLineRunner  {
 //
 //        }
 
-        //sync data
+//        sync data
 //        productService.syncDataToES();
     }
 }

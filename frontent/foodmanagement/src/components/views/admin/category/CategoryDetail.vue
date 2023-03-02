@@ -107,7 +107,7 @@ import {
     required,
 } 
 from "vuelidate/lib/validators";
-import CategoryAPI from '../../../../api/component/food/CategoryAPI'
+// import CategoryAPI from '../../../../api/component/food/CategoryAPI'
 import { PopupState } from '../../../../base/Resources.js';
 import Base from '../../../../base/Base.js';
 //import Base from '../../../../base/Base.js';
@@ -220,14 +220,14 @@ export default {
             this.listMgs.splice(index, 1);
         },
         async crudObject(){
-            if(this.$refs.imageURL.files && this.$refs.imageURL.files[0]){
-                let formData = new FormData();
-                formData.append('file', this.$refs.imageURL.files[0])
-                this.category.imageURL = await CategoryAPI.uploadFile(formData);
-            }
-            else {
-                this.category.imageURL = '';
-            }
+            // if(this.$refs.imageURL.files && this.$refs.imageURL.files[0]){
+            //     let formData = new FormData();
+            //     formData.append('file', this.$refs.imageURL.files[0])
+            //     this.category.imageURL = await CategoryAPI.uploadFile(formData);
+            // }
+            // else {
+            //     this.category.imageURL = '';
+            // }
             this.$emit('crudObject', this.category);
         },
 

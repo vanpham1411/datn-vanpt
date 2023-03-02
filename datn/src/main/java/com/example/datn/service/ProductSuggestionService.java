@@ -32,30 +32,42 @@ public class ProductSuggestionService {
         return list;
     }
 
-    public List<Product> getSuggestion(long userID) {
-        Long viewRecent = viewProductRepository.getRecentView(userID);
-        List<Product> listProduct = getRelated(viewRecent);
+    public List<Product> getSuggestion(Long userID) {
+        if(userID == null) {
+            return productService.getListProductInfo(0,20);
+        }
+        List<Long> viewRecent = viewProductRepository.getRecentView(userID);
+        if(viewRecent == null || viewRecent.size() == 0) {
+            return productService.getListProductInfo(0,20);
+
+        }
+        List<Product> listProduct = getRelated(viewRecent.get(0));
         Map<Long, Product> map = new HashMap<>();
         for(Product product: listProduct) {
+            if(!map.containsKey(viewRecent))
             map.put(product.getProductID(), product);
         }
         List<Long> listID = suggestionByUser(userID);
-        for(Long id : listID) {
-            if(!map.containsKey(id)) {
-                Product product = productService.getProductInfo(id);
-                if(product != null)
-                map.put(id, product);
+        if(listID != null || listID.size()>0) {
+            for(Long id : listID) {
+                if(!map.containsKey(id)) {
+                    Product product = productService.getProductInfo(id);
+                    if(product != null)
+                        map.put(id, product);
+                }
             }
         }
-        return listProduct;
+        return  map.values().stream().toList();
 
     }
 
     public List<Long> suggestionByUser(long userID) {
         List<Long> inputValue = suggestUserRepository.getByID(userID);
         List<Long> outPut = suggestUserRepository.suggestProduct(inputValue);
+        if(outPut == null) return null;
+        List<Long> res = new ArrayList<>();
         for(Long id: outPut) {
-            if(inputValue.contains(id)) outPut.remove(id);
+            if(!inputValue.contains(id)) res.add(id);
         }
         return outPut;
     }

@@ -73,7 +73,8 @@ const Pages = [
     { value: 20, text: '20 bản ghi trên 1 trang' },
     { value: 30, text: '30 bản ghi trên 1 trang' },
     { value: 50, text: '50 bản ghi trên 1 trang' },
-    { value: 100, text: '100 bản ghi trên 1 trang' }
+    { value: 100, text: '100 bản ghi trên 1 trang' },
+    { value: 200, text: '200 bản ghi trên 1 trang' }
 ]
 
 const Actions = [
@@ -257,7 +258,7 @@ const ListTimeToFilter = [{
     {
         text: 'Qúy này',
         value: {
-            startDate: new Date(new Date().getFullYear(), (Math.floor(new Date().getMonth()) / 3) * 3, 1),
+            startDate: new Date(new Date().getFullYear(), ((Math.floor(new Date().getMonth())-1) / 3) * 3, 1),
             endDate: new Date()
         }
     },

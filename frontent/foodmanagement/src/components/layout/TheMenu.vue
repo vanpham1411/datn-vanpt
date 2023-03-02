@@ -34,7 +34,7 @@
         </router-link>
         <router-link tag="div" to="/app/product" id="app-food" class="nav-item" v-tooltip.top-end="{content:'Sản phẩm', classes:'tooltip'}" title="">
             <div class="nav-item-icon app-food flex-center">
-                <i class="fa fa-hamburger"></i>
+                <i class="fa fa-vest"></i>
             </div>
             <div class="nav-item-text" :class="{textleft:fadeleft}">
                 Sản phẩm

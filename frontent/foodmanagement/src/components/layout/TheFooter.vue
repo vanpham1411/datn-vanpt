@@ -1,19 +1,19 @@
 <template>
 <div class="footer">
-    <div class="icon-footer flex-center">Project</div>
+    <div class="icon-footer flex-center">Đồ án</div>
     <div class="flex">
-        <div class="w-1/3 content-footer center">
-            <h3>ADDRESS</h3>
-            <p>102 15th Ave,<br>New York, NY 10018<br>United States</p>
+        <div class="w-1/2 content-footer center">
+            <h3>ĐỊA CHỈ</h3>
+            <p>71 Hai Bà Trưng,<br>Cửa Nam, Hoàn Kiếm<br>Hà Nội</p>
         </div>
         <!-- <div class="w-1/4 content-footer center">
             <h3>BOOK A TABLE</h3>
             <p>Dogfood och Sliders foodtruck.<br>Under Om oss kan ni läsa<br>
                 <span style="color:#ffc222; font-size: 20px;font-weight:700">(850) 435-4155</span></p>
         </div> -->
-        <div class="w-1/3 content-footer center">
-            <h3>OPENING HOURS</h3>
-            <p>Monday – Friday: 8am – 10pm<br>Saturday: 9am – 9pm</p>
+        <div class="w-1/2 content-footer center">
+            <h3>GIỜ MỞ CỬA</h3>
+            <p>Thứ Hai – Thứ Sáu: 8am – 10pm<br>Cuối tuân: 9am – 9pm</p>
             <div class="contact-link flex-center">
                 <div class="elementor-grid-item"> 
                     <a class="" href="https://www.facebook.com/opalwordpress/" target="_blank">
@@ -37,10 +37,10 @@
                 </div>
             </div>
         </div>
-        <div class="w-1/3 content-footer center">
+        <!-- <div class="w-1/3 content-footer center">
             <h3>NEWSLETTER</h3>
             <p>Subscribe to the weekly newsletter<br>for all the latest updates</p>
-        </div>
+        </div> -->
     </div>
 </div>
 </template>

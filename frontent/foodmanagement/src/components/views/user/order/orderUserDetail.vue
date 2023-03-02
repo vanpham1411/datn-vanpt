@@ -40,11 +40,11 @@
                                     <div class="img-food"><img :src="data.imageURL" alt=""></div>
                                     <span class="sale" v-if="data.HasDiscount">Sale!</span>
                                 </div>
-                                <div class="w-1/4 m-l-12">
+                                <div class="w-1/3 m-l-12">
                                     <div @click="goToFood(data.productID)" class="food-name pointer"><b>{{data.productName}}</b></div>
                                     <div class="food-size flex-center">
-                                        <div class="w-1/3 flex-center">Size: {{data.SizeName}}</div> 
-                                        <div class="w-2/3">
+                                        <div class="w-full flex-center">Loại: {{data.typeName + ' - ' + data.size}}</div> 
+                                        <div class="w-full">
                                             <div class="unit-price">
                                                 Giá: <b :id="'numberAmount'+index" :class="{'line-through': data.HasDiscount}">{{formatNumber(data.price)}}</b> 
                                                 <span v-if="!data.HasDiscount">VND</span>
@@ -82,13 +82,13 @@
                     </div>
                     <div class="form-footer flex" v-if="isEmployee">
                         <div class="admin-btn-normal btn-delete" tabindex="18" @click="btnXForm()" @keyup.enter="btnXForm()">Hủy</div>
-                        <div style="flex:1;" class="flex-center m-r-12" v-if="orderStatus.value==1||orderStatus.value==6">
+                        <!-- <div style="flex:1;" class="flex-center m-r-12" v-if="orderStatus.value==1||orderStatus.value==6">
                             <p class="m-r-12" style="width:110px;">Lý do {{orderStatus.text}}</p>
                             <textarea name="OrderReason" style="height: 39px;" @blur="checkOrderReason" v-model="order.OrderReason" class="form-control w-full" id="OrderReason" ref="OrderReason"></textarea>
                             <div class="invalid-feedback" style="margin-top: -65px;margin-left: 50%;">
                                 <p>Lý do {{orderStatus.text}} không được để trống.</p>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="btn-save-all flex">
                             <!-- :disable="readonly" -->
                             <div class="admin-btn-normal btn-save" tabindex="16"

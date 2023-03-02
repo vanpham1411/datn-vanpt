@@ -1,6 +1,8 @@
 <template>
     <v-pagination v-model="currentPage" 
+    :length="totalPages"
     :page-count="totalPages" 
+    
     :classes="bootstrapPaginationClasses" 
     :labels="customLabels" 
     @change="getEmployeesPage"></v-pagination>                 
@@ -38,7 +40,11 @@ export default {
     },
     methods:{
         getEmployeesPage(){
+            console.log("check")
+            console.log(this.currentPage)
+
             this.$emit('getEmployeesPage', this.currentPage);
+            this.$emit('getFilterPage', this.currentPage)
         }
     }
 }

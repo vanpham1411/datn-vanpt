@@ -5,11 +5,11 @@
             <div class="flex contact-addr w-1/2 align-items" style="min-width: 385px;">
                 <div class="call-us w-1/2 flex align-items">
                     <div class="logo-icon icon-small-phone"></div>
-                    <div>CALL US: +381 65 666 6666</div>
+                    <div>ĐIỆN THOẠI: 065 666 6666</div>
                 </div>
                 <div class="contact-address w-1/2 flex align-items">
                     <div class="logo-icon icon-small-addr"></div>
-                    <div>71 Madison Ave</div>
+                    <div>71 HAI BÀ TRƯNG</div>
                 </div>
             </div>
             <div class="contact-link w-1/2 flex" style="justify-content: end;">
@@ -19,7 +19,7 @@
                     </a>
                 </div>
                 <div class="elementor-grid-item"> 
-                    <a class="" href="#" target="_blank"> 
+                    <a class="" href="https://www.youtube.com/user/WPOpalTheme" target="_blank"> 
                         <i class="fab fa-twitter"></i> 
                     </a>
                 </div>
@@ -29,7 +29,7 @@
                     </a>
                 </div>
                 <div class="elementor-grid-item"> 
-                    <a class="" href="https://demo2.pavothemes.com/project/menu-restaurant" target="_blank"> 
+                    <a class="" href="https://www.youtube.com/user/WPOpalTheme" target="_blank"> 
                         <i class="fab fa-wordpress"></i>
                     </a>
                 </div>

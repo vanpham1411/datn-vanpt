@@ -12,16 +12,17 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public int signup(User user) {
+    public User signup(User user) {
         if(userRepository.checkExistByName(user.getName()) == 1) {
-            return 0;
+            return null;
         }
         user.setUserID(SequenceGenerator.getInstance().nextId());
         user.setRole(0);
         user.setPassword(Hashing.hash(user.getPassword()));
 
         userRepository.save(user);
-        return 1;
+        user.setPassword(null);
+        return user;
     }
 
     public User login(User user) {

@@ -35,10 +35,10 @@
                             <vue-combobox @getSelect="changeItem($event,data)" v-if="!data.productItem.product.hasDiscount"
                                         :combobox_valid="false" 
                                         :placeholder="''" 
-                                        class="w-1/3 m-r-12"
+                                        class="w-2/3 m-r-12"
                                         :item_text="['typeName', 'size']" 
                                         :items="data.productItem.items"
-                                        :display_item="'typeName'" 
+                                        :display_item="'display'" 
                                         :groupName="['Loại', 'Kích cỡ']"
                                         :vmodel="data.typeModel"
                                         :multiple="false">
@@ -73,30 +73,7 @@
                         <button class="m-r-12" @click="updateQuantity('add', index, data)">+</button>
                     </div>
                 </div>
-                <div class="m-l-12 w-1/3">
-                    <!-- <div v-if="data.ListOrgTopping && data.ListOrgTopping.length > 0" class="toppings flex ">
-                        <div class="">
-                            <div class="topping-quantity">
-                                <input type="checkbox" class="checkbox pointer flex-center" :ref="'ChooseAll'+index" :id="'choose-all' + index" @change="caculateTopping(data, 'all', index, $event)"/>
-                            </div>
-                            <div class="topping-name">Topping</div> 
-                            <div class="topping-price">Giá (VND)</div> 
-                        </div>
-                        <div class="topping-item" v-for="(topping) in data.ListOrgTopping" :key="topping.ToppingCode">
-                            <div class="topping-quantity">
-                                <input type="checkbox" class="checkbox pointer flex-center" :ref="'CheckChoose'+index"
-                                        @change="caculateTopping(data, topping, index, $event)"
-                                        :value="topping.ToppingId" name="topping" v-model="data.checkedToppings"/>
-                            </div>
-                            <div class="topping-name">{{topping.ToppingName}}</div> 
-                            <div class="topping-price">{{topping.ToppingAmount}}</div> 
-                        </div>
-                        <div class="topping-last">
-                            <div class="topping-name flex-center" style="padding: 0;">Tổng giá</div> 
-                            <div class="topping-price flex-center" style="height: 66.67%" :id="'amountToppingModel'+index">{{data.amountToppingModel}}</div> 
-                        </div>
-                    </div> -->
-                </div>
+                
                 <div class="w-1/8 m-l-12">
                     Thành tiền: <b style="color:var(--primary-color);" :id="'amountFood'+index">{{data.realAmount}}</b>
                 </div>
@@ -203,6 +180,7 @@ export default {
             this.listCart.forEach(ele => {
                 ele.productItem.items.forEach(item => {
                     item.typeName = item.type.name;
+                    item.display = item.typeName + ' - ' + item.size;
                     if(item.itemID === ele.cartItem.itemID) {
                         ele.typeModel = item;
                     }

@@ -101,7 +101,7 @@ public class ProductController {
     @PostMapping("/Product/ProductSold")
     public ResponseEntity productSold(@RequestBody FilterParam param) {
         return ResponseEntity.ok(new ResponseBody(
-                productService.productSold(param.getCreateDateMin()),
+                productService.productSold(param),
                 ResponseBody.Status.SUCCESS,
                 ResponseBody.Code.SUCCESS
         ));

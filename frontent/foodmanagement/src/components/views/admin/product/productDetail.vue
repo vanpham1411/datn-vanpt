@@ -159,10 +159,10 @@
         <div class="btn-save-all flex-center" v-if="crudDetail != 'read'">
             <div class="admin-btn-normal btn-save pointer" tabindex="16" @click="crudObject()" @keyup.enter="crudObject()">Cất</div>
             <!-- <div class="btn-footer btn-save-more" tabindex="17" @click="post_save = true;crudObject()" @keyup.enter="post_save = true,crudObject()">Cất và Thêm</div> -->
-            <div class="admin-btn-normal admin-btn-primary pointer" v-if="!readonly" 
+            <!-- <div class="admin-btn-normal admin-btn-primary pointer" v-if="!readonly" 
                     @click="post_save=true,crudObject()"
                     v-shortkey="['ctrl','shift','s']" @shortkey="post_save = true,crudObject()"
-                    v-tooltip.top="{content:'Cất và thêm (Ctrl+ Shift + S)', classes:'tooltip', offset: '5px'}">Cất và thêm</div>
+                    v-tooltip.top="{content:'Cất và thêm (Ctrl+ Shift + S)', classes:'tooltip', offset: '5px'}">Cất và thêm</div> -->
         </div>
         <div v-if="crudDetail == 'read'" class="btn-save-all">
             <div class="admin-btn-normal admin-btn-primary pointer" tabindex="16" @click="changeCrud('put')" @keyup.enter="changeCrud('put')">Sửa</div>

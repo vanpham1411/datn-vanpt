@@ -8,7 +8,7 @@
     </div>
     <div class="flex content-header">
         <div class="welcome">
-            Welcome to Project
+            Đồ án 
         </div>
         <div class="user-account pointer flex" @click="openUser=!openUser">
             <i class="fa fa-user"></i>
@@ -18,12 +18,12 @@
             <div class="center m-b-12" style="font-size:16px"><b>Thông tin tài khoản</b></div>
             <div class="center user-name m-b-12"><b>{{user.name}}</b></div>
             <div class="user-info m-b-20">
-                <p class="m-b-2">Họ tên: <b>{{user.fullName}}</b></p>
+                <!-- <p class="m-b-2">Họ tên: <b>{{user.fullName}}</b></p>
                 <p class="m-b-2">Mã nhân viên: <b>{{user.userCode}}</b></p>
-                <p class="m-b-2">Email: <b>{{user.email}}</b></p>
+                <p class="m-b-2">Email: <b>{{user.email}}</b></p> -->
                 <p class="m-b-2">Số điện thoại: <b>{{user.phone}}</b></p>
             </div>
-            <div class="pointer btn-account m-b-12">Đổi mật khẩu</div>
+            <!-- <div class="pointer btn-account m-b-12">Đổi mật khẩu</div> -->
             <div class="pointer btn-account" @click="logout">Đăng xuất</div>
         </div>
     </div>
@@ -59,6 +59,7 @@ export default {
         },
         logout(){
             Base.logout();
+            localStorage.removeItem("user");
             this.$emit('changeUser', false);
             this.$router.push({ path: '/login' });
         },
@@ -91,7 +92,7 @@ export default {
     font-size: 18px;
     font-weight: bold;
     flex: 1;
-    color: var(--primary-color);
+    color: var(--primary-admin-color);
     font-style: italic;
 }
 

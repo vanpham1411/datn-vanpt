@@ -11,6 +11,7 @@ import com.example.datn.domain.repository.*;
 import com.example.datn.domain.utility.DataResponse;
 import com.example.datn.domain.utility.FilterParam;
 import com.example.datn.domain.utility.SequenceGenerator;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,9 +40,8 @@ public class ProductService {
     @Autowired
     private ProductESRepository productESRepository;
     public List<Product> getListProductInfo(int limit, int offset) {
-        List<Product> productList = productRepository.getProductInfo(limit,offset);
-
-        return productList;
+        DataResponse res  = productESRepository.search(null, 0, 0, 20);
+        return (List<Product>) res.getData();
     }
 
     public void syncDataToES() {
@@ -86,15 +86,18 @@ public class ProductService {
 
     }
 
-    public List<ProductRevenue> productSold(Timestamp timestamp) {
-       List<List<Object>> list = productRepository.getPopularProduct();
-       log.info("get list: {}", list.get(0).get(0));
+    public List<ProductRevenue> productSold(FilterParam param) {
+       List<List<Object>> list = productRepository.getPopularProduct(param.getCreateDateMin(), param.getCreateDateMax());
+       if(list != null && list.size()>0) log.info("get list: {}", list.get(0).get(0));
        List<ProductRevenue> productRevenueList = new ArrayList<>();
        for(List<Object> obj : list) {
            BigInteger integer = (BigInteger) obj.get(0);
            BigDecimal quantity = (BigDecimal) obj.get(2);
            Integer cost = (Integer) obj.get(3);
-           ProductRevenue revenue = new ProductRevenue(integer.longValue(), (String)obj.get(1), quantity.intValue(), (long)Long.valueOf(cost));
+           long amount = (long) quantity.intValue() * cost;
+           ProductRevenue revenue = new ProductRevenue(integer.longValue(), (String)obj.get(1), quantity.intValue(), amount);
+//           ProductRevenue revenue = new ProductRevenue(integer.longValue(), (String)obj.get(1), quantity.intValue(), (long)Long.valueOf(cost));
+
            productRevenueList.add(revenue);
        }
         return productRevenueList;
@@ -134,8 +137,8 @@ public class ProductService {
         newProduct.setUpdateTime(now);
         newProduct.setSoldQuantity(product.getSoldQuantity());
 
-        productRepository.save(product);
-        productESRepository.updateProduct(product);
+        productRepository.save(newProduct);
+        productESRepository.updateProduct(newProduct);
         List<Item> itemList = new ArrayList<>();
         List<ItemModel> itemModelListOld = productItemOld.getItems();
         List<Long> listItemID = new ArrayList<>();
@@ -191,12 +194,18 @@ public class ProductService {
         if(product.getProductID() == null) {
             product.setProductID(productID);
         }
+        int quantity =0;
+        for (ItemModel itemModel : productItem.getItems()){
+            quantity += itemModel.getQuantity();
+        }
         product.setCreateTime(createTime);
         product.setUpdateTime(updateTime);
         product.setSoldQuantity(soldQuantity);
+        product.setQuantity(quantity);
         productRepository.save(product);
         List<Type> typeList = new ArrayList<>();
         List<Item> itemList = new ArrayList<>();
+
         for (ItemModel itemModel : productItem.getItems()) {
             long itemID = SequenceGenerator.getInstance().nextId();
             Type type = itemModel.getType();

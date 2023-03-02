@@ -27,6 +27,7 @@ import org.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation;
 import org.elasticsearch.search.aggregations.bucket.terms.ParsedStringTerms;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.stereotype.Component;
@@ -80,8 +81,9 @@ public class ProductESRepository {
 //        QueryBuilders.rangeQuery("cost").lte(product.getCost() *2).gt(0);
 
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery()
+                .mustNot(QueryBuilders.termQuery("productID",product.getProductID()))
                 .must(QueryBuilders.termQuery("categoryID",product.getCategoryID()))
-                .must(QueryBuilders.rangeQuery("cost").lte(product.getCost() *3/2).gt(product.getCost()/2))
+                .must(QueryBuilders.rangeQuery("cost").lte(product.getCost() *4/3).gt(product.getCost() *2/3))
                 .must(QueryBuilders.termQuery("status",0));
 
         searchSourceBuilder.query(boolQueryBuilder);
@@ -143,8 +145,13 @@ public class ProductESRepository {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 //        QueryBuilders.rangeQuery("cost").lte(product.getCost() *2).gt(0);
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+
         if(keyword != null && !keyword.trim().equals("")) {
-            boolQueryBuilder.must(QueryBuilders.multiMatchQuery(keyword, "name", "description"));
+            if(keyword.startsWith("A-") || keyword.startsWith("Q-"))
+            {
+                boolQueryBuilder.must(QueryBuilders.termQuery("code.keyword",keyword));
+            }
+            else boolQueryBuilder.must(QueryBuilders.multiMatchQuery(keyword, "name", "description"));
         }
         if(categoryID != 0) {
             boolQueryBuilder.must(QueryBuilders.termQuery("categoryID", categoryID));
@@ -156,6 +163,7 @@ public class ProductESRepository {
 
         SearchRequest searchRequest= new SearchRequest(INDEX_NAME);
         searchRequest.source(searchSourceBuilder);
+
         SearchResponse response = null;
         try {
             response = client.search(searchRequest, RequestOptions.DEFAULT);
@@ -170,7 +178,9 @@ public class ProductESRepository {
             Product product = ObjectMapperUntil.deserialize(value, Product.class);
             list.add(product);
         }
-        DataResponse dataResponse = new DataResponse(list,(int) count/limit,(int) count);
+        int totalPage = (int) count/limit;
+        if(count % limit >0) totalPage++;
+        DataResponse dataResponse = new DataResponse(list,totalPage,(int) count);
         return dataResponse;
     }
 }

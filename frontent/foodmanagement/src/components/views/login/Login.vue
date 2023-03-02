@@ -287,15 +287,15 @@ export default {
                         this.user.IsAdmin = false;
                         this.user.UserStatus = 0;
                         let res = await UserAPI.register(this.user);
-                        //console.log(res);
-                        if(res.data.resultCode == "FM-Success"){
+                        console.log(res);
+                        if(res.data.code == 200){
                             localStorage.setItem('user', JSON.stringify(res.data.data));
                             setTimeout(function(){
                                 Base.logout();
                             }, 86400000);
                             this.$router.push({path: this.prevRoute ? this.prevRoute.path : '/'});
                         }
-                        else if(res.data.success==false && res.data.resultCode != "FM-Exception"){
+                        else if(res.data.code != 200 && res.data.resultCode != "FM-Exception"){
                             this.message = res.data.data[0];
                             this.showPopup(PopupState.Duplicate)
                         }

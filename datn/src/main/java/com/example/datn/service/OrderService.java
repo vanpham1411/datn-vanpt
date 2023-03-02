@@ -124,11 +124,18 @@ public class OrderService {
             param.setKeyword("");
         }
 
+        if(param.getUserID() != null && param.getUserID() != 0) {
+            orderList = orderRepository.filterUser(param.getUserID(), param.getStatus());
+            return DataResponse.builder()
+                    .data(orderList)
+                    .totalPage(1)
+                    .totalRecord(orderList.size()).build();
+        }
         log.info("filter order param: ", param);
         if(param.getStatus() == null && param.getUserID() == null) {
-            orderList = orderRepository.filter(createDateMin, createDateMax, param.getKeyword(), 20, 0);
+            orderList = orderRepository.filter(createDateMin, createDateMax, param.getKeyword(), 100, 0);
         }
-        else orderList = orderRepository.filterStatus(createDateMin, createDateMax, param.getKeyword(), 20, 0, param.getStatus());
+        else orderList = orderRepository.filterStatus(createDateMin, createDateMax, param.getKeyword(), 100, 0, param.getStatus());
         return DataResponse.builder()
                 .data(orderList)
                 .totalPage(1)

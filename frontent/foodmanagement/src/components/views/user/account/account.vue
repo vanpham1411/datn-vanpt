@@ -185,7 +185,7 @@ export default {
                 OrderFilter: null,
                 status: statusFilter,
                 CreatedDateMin: null,
-                CreatedDateMax: null,
+                CreateDateMax: null,
                 PageNumber: null,
                 PageSize: null,
             })
@@ -248,7 +248,9 @@ export default {
         },
         logout(){
             Base.logout();
+            localStorage.removeItem("user");
             this.$router.push({ path: '/login' });
+
         },
         btnXForm(){
             this.showDetail = false;

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,8 +35,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "select p from Product p where p.name like %?1%")
     List<Product> filterProduct(String keyword);
 
-    @Query(value = "SELECT p.product_id as productID, p.name as name, sum(oi.quantity) as quantity, p.cost as amount FROM product_order as o inner join order_item as oi on o.order_id  = oi.order_id inner join item i on i.item_id = oi.item_id inner join product as p on p.product_id = i.product_id where o.status = 4 and p.status =0 group by p.product_id, p.name, p.cost order by quantity desc ", nativeQuery = true)
-    List<List<Object>> getPopularProduct();
+    @Query(value = "SELECT p.product_id as productID, p.name as name, sum(oi.quantity) as quantity, p.cost as amount FROM product_order as o inner join order_item as oi on o.order_id  = oi.order_id inner join item i on i.item_id = oi.item_id inner join product as p on p.product_id = i.product_id where o.status = 4 and p.status =0 and o.create_time >= ?1 and o.create_time <= ?2 group by p.product_id, p.name, p.cost order by quantity desc ", nativeQuery = true)
+    List<List<Object>> getPopularProduct(Timestamp startDate, Timestamp endDate);
 
 //    @Query(value = "SELECT item.product_id FROM order_item as i inner join product_order as o on i.order_id = o.order_id  inner join item as item on i.item_id = item.item_id where  o.user_id = ?1 order by o.order_id desc limit ?2", nativeQuery = true)
 //    List<Long> getRecentProduct(long userID,int limit);

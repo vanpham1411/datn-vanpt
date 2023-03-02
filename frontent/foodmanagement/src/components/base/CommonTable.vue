@@ -59,7 +59,7 @@
                 <div class="w-full">
                     <img src="../../assets/lib/img/common/bg_report_nodata.76e50bd8.svg" alt=""><br>
                     <span class="no-data-text" v-if="objectName!='Order'">Không có dữ liệu</span>
-                    <span class="no-data-text" v-else>Bạn chưa tạo đơn hàng</span>
+                    <span class="no-data-text" v-else>Chưa có đơn hàng</span>
                 </div>
             </div>
             <!-- </div> -->
@@ -72,7 +72,7 @@
                     <!-- @click="menuTop" -->
                     <vue-select :top="true" :item_text="'text'" :items="pages" :vmodel="page_model" @getSelect="getPageSelect($event)"></vue-select>
                 </div>
-                <v-pagination v-model="currentPage" :page-count="totalPages" :classes="bootstrapPaginationClasses" :labels="customLabels" @change="$emit('getFilterPage')"></v-pagination>
+                <v-pagination v-model="currentPage" :length="dataList.totalPage" :page-count="totalPages" :classes="bootstrapPaginationClasses" :labels="customLabels" @input="onchange($event)"></v-pagination>
             </div>
         </div>
     </div>
@@ -100,6 +100,7 @@ import VueSelect from '@/components/base/VueSelect';
 import VuePopup from '@/components/base/VuePopup';
 import SettingColumn from '@/components/base/SettingColumn';
 export default {
+
     name:'CommonTable',
     components:{
         vPagination,
@@ -150,12 +151,12 @@ export default {
             // lấy dữ liệu số lượng bản ghi trên 1 trang
             pages: Pages,
             // số bản ghi trên trang
-            page_model: Pages[1],
+            page_model: Pages[3],
             // action được chọn
             action_model:null,
             message:'',
             // tổng số bản ghi trên bảng
-            pageSize: 20,
+            pageSize: 50,
             popShow: false,
             // mảng bản ghi tích chọn
             listChoose: [],
@@ -173,7 +174,7 @@ export default {
     },
     created(){
         console.log(this.layoutConfig);
-        
+        this.totalRecord = this.dataList.totalRecord;
         if(this.noAction == true){
             this.hideAction = true;
         }
@@ -200,7 +201,7 @@ export default {
             this.pageSize = item.value;
             this.currentPage = 1;
             await this.$emit("getFilterPage");
-            this.totalPages = this.dataList.totalPage;
+            // this.totalPages = this.dataList.totalPage;
         },
 
         /**
@@ -375,6 +376,11 @@ export default {
                 }
             })
             this.setColumn = false;
+        },
+        async onchange(value) {
+            console.log(value);
+            this.currentPage = value;
+            await this.$emit("getFilterPage");
         }
     },
 }

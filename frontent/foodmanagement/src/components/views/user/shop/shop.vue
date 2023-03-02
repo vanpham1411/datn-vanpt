@@ -24,13 +24,13 @@
             </div>
             <div class="action-right flex">
                 <div class="filter-pop" style="position:relative;">
-                    <button class="btn-filter-bar flex-center admin-btn-normal m-r-12" style="padding:5px" type="button" id="btnFilterToggle" @click="showFilter=!showFilter;">
+                    <!-- <button class="btn-filter-bar flex-center admin-btn-normal m-r-12" style="padding:5px" type="button" id="btnFilterToggle" @click="showFilter=!showFilter;">
                         <i class="fa fa-filter"></i>
                         <span>Lọc</span>
-                    </button>
+                    </button> -->
                     <div class="pop-filter" :class="{'show-filter':showFilter, 'h-0':!showFilter}">
                         <div class="other-icon logo-icon btn-close pointer" id="btn-close" style="position: absolute;right: 5px;top: 5px;"
-                                @click="showFilter=false;">
+                                @click="ssss=false;">
                         </div>
                         <div class="pop-init">
                             <div class="pop-info1">
@@ -60,6 +60,7 @@
                     </div>
                     <div class="w-3/5 m-l-12">
                         <div class="food-name"><b>{{data.name}}</b></div>
+                        <div class="food-title">{{data.description}}</div>
                         <!-- <div class="food-title">{{data.Title}}</div> -->
                         <div class="food-size flex">
                             <div class="w-3/4">Giá: <b :class="{'line-through': data.HasDiscount}">{{data.cost}}</b> <b v-if="data.HasDiscount">{{formatNumber(data.cost)}}</b> VND</div>
@@ -75,15 +76,19 @@
                     <!-- @click="menuTop" -->
                     <vue-select :top="true" :item_text="'text'" :items="pages" :vmodel="page_model" @getSelect="getPageSelect($event)"></vue-select>
                 </div>
-                <!-- <v-pagination v-model="currentPage" :page-count="totalPages" :classes="bootstrapPaginationClasses" :labels="customLabels" @change="$emit('getFilterPage')"></v-pagination> -->
+                <!-- <v-pagination v-model="currentPage" :length="totalPages" :page-count="totalPages" :classes="bootstrapPaginationClasses" :labels="customLabels" @change="$emit('getFilterPage')"></v-pagination> -->
+                <v-pagination v-model="currentPage" :length="totalPages" :page-count="totalPages" :classes="bootstrapPaginationClasses" :labels="customLabels" @input="onchange($event)"></v-pagination>
             </div>
+
         </div>
     </div>
 </template>
 
 <script>
 // import BannerCommon from '../common/BannerCommon.vue';
+// import ThePagination from '../../../base/VuePagination.vue';
 import VueCombobox from '../../../base/VueCombobox.vue';
+import vPagination from 'vue-plain-pagination';
 import VueSelect from '../../../base/VueSelect.vue'
 import CategoryAPI from '../../../../api/component/food/CategoryAPI';
 import ProductAPI from '../../../../api/component/food/ProductAPI';
@@ -95,7 +100,8 @@ export default {
     components: {
         VueCombobox,
         VueSelect,
-
+        // ThePagination,
+        vPagination
     },
     name: "Shop",
     data() {
@@ -127,9 +133,9 @@ export default {
             // lấy dữ liệu số lượng bản ghi trên 1 trang
             pages: Pages,
             // số bản ghi trên trang
-            page_model: Pages[1],
+            page_model: Pages[3],
             // tổng số bản ghi trên bảng
-            pageSize: 20,
+            pageSize: 50,
 
             categoryList:[{
                 categoryId:'',
@@ -141,13 +147,36 @@ export default {
                 keyword:null,
                 parentID:null,
                 pageNumber:1,
-                pageSize:20
+                pageSize:50
             },
             showFilter:false,
 
         }
     },
     methods: {
+        
+         async getPageSelect(value) {
+            console.log(value)
+            
+            this.pageSize = value.value
+            this.paramGet = {
+                keyword: this.keyword,
+                parentID: this.category_model.categoryId?this.category_model.categoryId:null,
+                // pageNumber: this.currentPage,
+                pageNumber:1,
+                pageSize: this.pageSize
+            };
+            this.dataList = await ProductAPI.getFilterPaging(this.paramGet);
+            this.dataList.data.forEach(ele => {
+                ele.imageURL = this.imgPath + ele.imageURL;
+            })
+            this.totalPages = this.dataList.totalPage;
+            if(this.dataList.data.length > 0){
+                this.dataList.data.forEach(ele => {  
+                    ele.cost = Base.formatNumber(ele.cost);
+                });
+            }
+        },
         async getFilterPage() {
             this.paramGet = {
                 keyword: this.keyword,
@@ -174,7 +203,12 @@ export default {
         filterMore(){},
         formatNumber(val){
             return Base.formatNumber(val);
-        }
+        },
+        async onchange(value) {
+            console.log(value)
+            this.currentPage = value;
+            await this.getFilterPage() 
+        },
     },
 
     async created() {
@@ -184,8 +218,8 @@ export default {
                 document.querySelector(".search-food input").value = "";
                 this.paramGet.keyword = this.keyword;
             }
-            this.paramGet.parentID = this.$route.params.categoryID?this.$route.params.categoryId:null;
-
+            this.paramGet.parentID = this.$route.params.categoryId?this.$route.params.categoryId:null;
+            console.log("get route param: ",this.$route.params )
             let categoryData = await CategoryAPI.getFilterPaging({CategoryFilter:null,CategoryStatus:null});
             this.categoryList = this.categoryList.concat(categoryData.data);
             this.dataList = await ProductAPI.getFilterPaging(this.paramGet);
@@ -219,6 +253,12 @@ export default {
         } catch (error) {
             console.log(error);
         }
+    },
+    watch: {
+        category_model() {
+            this.currentPage = 1;
+        },
+
     }
 
 
