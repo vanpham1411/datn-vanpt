@@ -173,7 +173,7 @@ export default {
         },
     },
     created(){
-        console.log(this.layoutConfig);
+        // console.log(this.layoutConfig);
         this.totalRecord = this.dataList.totalRecord;
         if(this.noAction == true){
             this.hideAction = true;
@@ -231,7 +231,7 @@ export default {
          * Mở form
          */
         openForm(entityDetail, action) {
-            console.log("openform ", entityDetail, action)
+            // console.log("openform ", entityDetail, action)
             this.$emit('openForm', entityDetail, action)
         },
 
@@ -240,7 +240,7 @@ export default {
          */
         getActionSelect(item, obj){
 
-            console.log("click from common table ", item, obj, this.objectName, item == CRUD.Delete)
+            // console.log("click from common table ", item, obj, this.objectName, item == CRUD.Delete)
             // nếu là nhân bản
             if(item == CRUD.Copy || item.value == CRUD.Copy){
                 this.listChoose=[];
@@ -276,7 +276,7 @@ export default {
             // nếu có dữ liệu khác thì mở popup
             if(Base.checkChangeData(obj, oldObj, crud, objectCode) == false){
                 this.showPopup(PopupState.Cancel);
-                console.log(this.popShow);
+                // console.log(this.popShow);
                 return;
             }
             // nếu không thì đóng form
@@ -328,8 +328,8 @@ export default {
 
         // lấy mảng item được chọn
         getListChoose(e, data){
-            console.log(this.objectName)
-            console.log(this.listChoose)
+            // console.log(this.objectName)
+            // console.log(this.listChoose)
             if(e.target.checked==true){
                 this.listChoose = this.listChoose.filter(obj => obj[this.objectName.toLowerCase()+"ID"] != e.target.getAttribute('id'));
                 this.listChoose.push(data);
@@ -378,7 +378,7 @@ export default {
             this.setColumn = false;
         },
         async onchange(value) {
-            console.log(value);
+            // console.log(value);
             this.currentPage = value;
             await this.$emit("getFilterPage");
         }

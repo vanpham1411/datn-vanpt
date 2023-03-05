@@ -98,6 +98,7 @@ export default {
         this.showInfoPopup(this.action);
     },
     created() {
+        console.log("create: ", this.idInvalid)
         //this.showInfoPopup(this.action);
     },
     methods: {
@@ -140,8 +141,11 @@ export default {
             // hiển thị pop khi dữ liệu không hợp lệ khi validate ngay trên form
             else if(action == PopupState.Invalid){
                 // this.popup.message = document.getElementById(this.idInvalid).nextSibling.firstChild.textContent;
-                this.popup.message = document.querySelector("#"+this.idInvalid+" ~ div > p").textContent;
+                console.log("this.idInvalid : ", this.idInvalid)
                 console.log(this.$el);
+
+                console.log("get textContent : ", document.querySelector("#"+this.idInvalid))
+                this.popup.message = document.querySelector("#"+this.idInvalid+" ~ div > p").textContent;
                 this.popup.btn_cancel = "Đóng";
                 this.color = 'primary-pop';
                 this.move = true;

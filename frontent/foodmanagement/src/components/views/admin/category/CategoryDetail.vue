@@ -176,7 +176,9 @@ export default {
                     if(this.$v.category[key]){
                         if(this.$v.category[key].$error == true){
                             this.idInvalid = key;
-                            this.$emit('showPopup', PopupState.Invalid);
+                            this.showPopup(PopupState.Invalid);
+                            console.log("oke")
+                            //console.log("idInvalid :" ,document.querySelector("#"+this.idInvalid))
                         }
                     }
                 }
@@ -186,6 +188,14 @@ export default {
             else {
                 return true;
             }
+        },
+
+        /**
+         * Mở popup
+         */
+         showPopup(crud) {
+            this.popShow = true;
+            this.action = crud;
         },
 
         /**

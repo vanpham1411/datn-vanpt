@@ -98,7 +98,7 @@ export default {
     },
     async created(){
         this.user = JSON.parse(localStorage.getItem('user'));
-        console.log(this.user.isEmployee)
+        // console.log(this.user.isEmployee)
         await this.getSelect(this.dateFilter);
     },
     methods: {
@@ -111,7 +111,7 @@ export default {
                 this.dataProductSold = [];
                 if(this.dataProductSold.length < 1){
                     this.changeLoader(true);
-                    console.log("filter date: ", this.dateFilter.value)
+                    // console.log("filter date: ", this.dateFilter.value)
                     this.dataProductSold = await ProductAPI.getProductSold(
                         {
                             createDateMin: this.dateFilter.value.startDate,
@@ -119,7 +119,7 @@ export default {
                         }
                     );
                     this.changeLoader(false);
-                    console.log(this.dataProductSold);
+                    // console.log(this.dataProductSold);
                     this.popularProductAmount.chartData = [
                         ['Sản phẩm', 'Doanh thu']
                     ];

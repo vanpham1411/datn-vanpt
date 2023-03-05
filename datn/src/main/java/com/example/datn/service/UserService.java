@@ -28,6 +28,7 @@ public class UserService {
     public User login(User user) {
         String password = Hashing.hash(user.getPassword());
         User user1 = userRepository.login(user.getName(), password);
+//        if(user1 == null) return null;
         user1.setPassword(null);
         return user1;
     }

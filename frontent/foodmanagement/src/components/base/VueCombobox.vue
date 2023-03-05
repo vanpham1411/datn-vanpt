@@ -353,8 +353,8 @@ export default {
             }
             else this.item_show = this.item_text[0];
         }
-         console.log(this.item_text, this.items);
-         console.log(this.vmodel)
+        //  console.log(this.item_text, this.items);
+        //  console.log(this.vmodel)
 
     },
     data() {

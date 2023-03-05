@@ -268,7 +268,12 @@ export default {
                                     console.log(result);
                                     //this.$router.push({path: this.prevRoute.path});
                                 }
-                                this.$router.push({path: this.prevRoute ? this.prevRoute.path : '/'});
+
+                                if(!this.prevRoute || this.prevRoute.name.includes('Admin')) {
+                                    this.$router.push({path:  '/' })
+                                }
+                                else this.$router.push({path:  this.prevRoute.path })
+                                // this.$router.push({path: this.prevRoute.name.includes() ? this.prevRoute.path : '/'});
                             }
                         }
                         else {
