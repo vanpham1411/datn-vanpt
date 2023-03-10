@@ -68,7 +68,7 @@ export default {
         },
         async getFilterPage() {
 
-            console.log("default page : ", this.defaultPage)
+            // console.log("default page : ", this.defaultPage)
             if(this.defaultPage) {
                 this.$refs.CommonTable.currentPage=1;
                 this.paramGet = {
@@ -152,7 +152,7 @@ export default {
                 if (this.crud == CRUD.Delete) {
                     this.changeLoader(true);
                     // thành công
-                    // console.log(this.listChoose);
+                    console.log(this.listChoose);
                     let listDelete = this.$refs.CommonTable.listChoose.map(item => item.productID);
                     var { data } = await ProductAPI.deleteMultiObj(listDelete);
                     this.changeLoader(false);
@@ -220,7 +220,7 @@ export default {
             this.dataList = await ProductAPI.getFilterPaging(this.paramGet);
             let categoryData = await CategoryAPI.getFilterPaging({ keyword: null, status: null });
             this.categoryList = this.categoryList.concat(categoryData.data);
-
+            this.defaultPage = false
             this.dataList.data.forEach(product => {
                 product.imageURL =this.imagepath +  product.imageURL;
             })

@@ -240,7 +240,7 @@ export default {
          */
         getActionSelect(item, obj){
 
-            // console.log("click from common table ", item, obj, this.objectName, item == CRUD.Delete)
+            console.log("click from common table ", item, obj, this.objectName, item == CRUD.Delete)
             // nếu là nhân bản
             if(item == CRUD.Copy || item.value == CRUD.Copy){
                 this.listChoose=[];
@@ -248,6 +248,7 @@ export default {
             } 
             // nếu là xóa
             else if(item == CRUD.Delete || item.value == CRUD.Delete){
+                console.log("Object commontable: ", obj);
                 if(obj['order'+'ID']){
                     this.listChoose = [obj];
                     this.showPopup(CRUD.Delete);
@@ -290,7 +291,8 @@ export default {
          * Mở popup
          */
         showPopup(crud) {
-            this.popShow = true;
+            if(this.listChoose.length > 0) {
+                this.popShow = true;
             this.actionPop = crud;
             //emit: goi den ham cha
             this.$emit('changeCrud', crud);
@@ -311,14 +313,17 @@ export default {
                     }
                 })
                 this.message = this.message.slice(0, this.message.length-2);
-                // console.log(this.message);
+                console.log(this.message);
             }
+            }
+            
         },
 
         /**
          * Gửi yêu cầu thêm/sửa/xóa employee/customer
          */
         async crudObject() {
+            console.log("crud : ", this.idInvalid)
             await this.$emit('crudObject');
         },
 
@@ -329,9 +334,19 @@ export default {
         // lấy mảng item được chọn
         getListChoose(e, data){
             // console.log(this.objectName)
-            // console.log(this.listChoose)
+            console.log("get list choose: ",data)
+            // console.log(e)/
             if(e.target.checked==true){
-                this.listChoose = this.listChoose.filter(obj => obj[this.objectName.toLowerCase()+"ID"] != e.target.getAttribute('id'));
+                // if(this.objectName === "Category") {
+                //     this.listChoose = this.listChoose.filter(obj => obj[this.objectName.toLowerCase()+"Id"] != e.target.getAttribute('d'));
+
+                // } else
+                // this.listChoose = this.listChoose.filter(obj => {
+                //     console.log("obj: ", obj, obj[this.objectName.toLowerCase()+"ID"])
+
+                //     console.log(obj[this.objectName.toLowerCase()+"ID"] != e.target.getAttribute('id'))
+                //     return obj[this.objectName.toLowerCase()+"ID"] != e.target.getAttribute('id')
+                // });
                 this.listChoose.push(data);
                 if(this.listChoose.length == this.dataList.data.length){
                     this.$refs.ChooseAll.checked = true;
@@ -339,11 +354,17 @@ export default {
                 else {
                     this.$refs.ChooseAll.checked = false;
                 }
-                // this.listChoose.add(data);
+                // this.listChoose.push(data);
             }
             else{
                 this.$refs.ChooseAll.checked = false;
-                this.listChoose = this.listChoose.filter(obj => obj[this.objectName.toLowerCase()+"ID"] != e.target.getAttribute('id'));
+                if(this.objectName === "Category") {
+                    this.listChoose = this.listChoose.filter(obj => {
+                        console.log(obj['categoryId'] , data)
+                        return obj['category'+'Id'] != data['category'+'Id']
+                    });
+                } else
+                this.listChoose = this.listChoose.filter(obj => obj[this.objectName.toLowerCase()+"ID"] != data[this.objectName.toLowerCase()+"ID"]);
                 // this.listChoose.delete(data);
             }
             if(this.listChoose.length > 0){

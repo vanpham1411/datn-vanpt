@@ -4,6 +4,7 @@ import com.example.datn.domain.entity.Category;
 import com.example.datn.domain.repository.CategoryRepository;
 import com.example.datn.domain.utility.DataResponse;
 import com.example.datn.domain.utility.FilterParam;
+import com.example.datn.domain.utility.SequenceGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,8 @@ public class CategoryService {
     }
 
     public Category saveCategory(Category category) {
+        long id = SequenceGenerator.getInstance().nextId();
+        category.setCategoryId(id);
         return categoryRepository.save(category);
     }
     public int deleteCategory(long categoryID) {

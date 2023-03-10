@@ -91,7 +91,7 @@ export default class BaseAPI {
     }
 
     /**
-     * Phương thức phân trang
+     * Phương thức upload file
      */
     async uploadFile(body) {
         const { data } = await BaseAPIConfig.post(`File`, body);

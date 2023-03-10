@@ -16,7 +16,8 @@ class CategoryAPI extends BaseAPI {
     }
 
     async delete(body) {
-        const { data } = await BaseAPIConfig.push(`${this.controller}/delete`, body);
+        // const { data } = await BaseAPIConfig.push(`${this.controller}/delete`, body);'
+        const data = await BaseAPIConfig.post(`${this.controller}/delete`, body)
         return data;
     }
 }

@@ -153,6 +153,7 @@ export default {
         
 
         showPopup(action){
+            console.log("put param for commontable: ", action)
             this.$refs.CommonTable.showPopup(action);
         },
 
@@ -174,17 +175,19 @@ export default {
                         this.currentPage = 1;
                         this.changeLoader(true);
                         // thành công
-                        // console.log(this.$refs.CommonTable.listChoose);
+                        console.log(this.$refs.CommonTable.listChoose);
                         let listDelete = [];
                         this.$refs.CommonTable.listChoose.forEach(item => {
+                            console.log("get list choose: ",item )
                             listDelete = listDelete.filter(id => id != item.categoryId);
                             listDelete.push(item.categoryId);
                         })
-                        console.log(this.message);
-                        var { data } = await CategoryAPI.delete(listDelete);
+                        console.log(listDelete);
+                        var {data}  = await CategoryAPI.delete(listDelete);
                         this.changeLoader(false);
-                        if(data.Data){
-                            this.message = data.Data;
+                        console.log(data)
+                        if(!data.data){
+                            this.message = data.data;
                             this.$refs.CommonTable.showPopup(PopupState.Duplicate);
                         }
                         else {

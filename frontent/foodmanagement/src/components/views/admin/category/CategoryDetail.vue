@@ -49,7 +49,7 @@
                                     </div>
                                 </div>
                                 <div class="general-row flex">
-                                    <div class="description w-2/5 m-r-12">
+                                    <div class="description general-row">
                                         <p>Mô tả</p>
                                         <textarea :readonly="readonly" class="w-full" rows="2" maxlength="255" tabindex="4"  v-model="category.description"
                                                     placeholder="">
@@ -253,5 +253,8 @@ export default {
 </script>
 
 <style>
+.description.general-row {
+    width: 100%;
+}
 
 </style>

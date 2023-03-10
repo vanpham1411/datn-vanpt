@@ -69,8 +69,8 @@ public class CategoryController {
         ));
     }
 
-    @PostMapping(path = "/Category/Delete")
-    public ResponseEntity delete(List<Long> categoryIDList) {
+    @PostMapping(path = "/Category/delete")
+    public ResponseEntity delete(@RequestBody List<Long> categoryIDList) {
         return ResponseEntity.ok(new ResponseBody(
                 categoryService.deleteMulti(categoryIDList),
                 ResponseBody.Status.SUCCESS,
