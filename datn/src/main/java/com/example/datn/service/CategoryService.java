@@ -17,6 +17,8 @@ import java.util.List;
 public class CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
+    @Autowired
+    ProductService productService;
 
     public List<Category> getAllCategory() {
         List<Category> categories = categoryRepository.findAll();
@@ -49,7 +51,7 @@ public class CategoryService {
     public int deleteMulti(List<Long> list) {
         list.forEach(category -> {
             categoryRepository.updateDeleted(1,category);
-
+            productService.deleteByCategory(category);
         });
         return 1;
     }

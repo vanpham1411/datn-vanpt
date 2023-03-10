@@ -183,7 +183,7 @@ public class ProductService {
         Timestamp now = new Timestamp(System.currentTimeMillis());
         int res = saveProduct(productItem,now, now, 0);
         productESRepository.addProduct(productItem.getProduct());
-        return res;
+        return 1;
 
     }
     @Transactional
@@ -251,8 +251,12 @@ public class ProductService {
      }
 
      public int deleteByCategory(long categoryID) {
-        return productRepository.deleteInCategory(categoryID);
-
+        int res = productRepository.deleteInCategory(categoryID);
+         List<Optional<Product> > optionalList = productRepository.findAllByCategoryID(categoryID);
+        optionalList.forEach(optional -> {
+            if(optional.isPresent()) productESRepository.updateProduct(optional.get());
+        });
+         return res;
      }
 
 

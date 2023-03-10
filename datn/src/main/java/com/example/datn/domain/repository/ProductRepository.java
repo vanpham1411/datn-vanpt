@@ -2,6 +2,7 @@ package com.example.datn.domain.repository;
 
 import com.example.datn.domain.entity.Product;
 import com.example.datn.domain.model.ProductRevenue;
+import org.aspectj.apache.bcel.classfile.Module;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,10 +12,12 @@ import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Repository
 @Transactional
 public interface ProductRepository extends JpaRepository<Product, Long> {
+    List<Optional<Product>> findAllByCategoryID(long categoryID);
     boolean existsByProductCode(String productCode);
     @Query(value = "select * from product p where p.status = 0 limit ?1 offset ?2 ", nativeQuery = true)
     List<Product> getProductInfo(int limit, int offset);

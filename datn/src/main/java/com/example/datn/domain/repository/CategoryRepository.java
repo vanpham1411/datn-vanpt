@@ -16,7 +16,7 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
     @Modifying
     public int updateDeleted(int status, Long categoryID);
     List<Category> findAllByIsDeleted(int deleted);
-    @Query("select c from Category c where c.name like %?1% or c.code like %?1% and c.isDeleted = 0")
+    @Query("select c from Category c where (c.name like %?1% or c.code like %?1%) and c.isDeleted = 0")
     public List<Category> filterByKeyword(String keyword);
 
 }

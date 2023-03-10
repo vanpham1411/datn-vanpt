@@ -172,7 +172,7 @@ export default {
             }],
             //loc theo thoi gian
             listTimeToFilter: ListTimeToFilter,
-            dateFilter: ListTimeToFilter[0],
+            dateFilter: ListTimeToFilter[1],
             showFilter: false,
             listOrderStatus:ListOrderStatus,
             orderStatusFilter: ListOrderStatus[0],
@@ -206,7 +206,7 @@ export default {
          * Đặt lại điều kiện lọc
          */
          resetFilter(){
-            this.dateFilter = this.listTimeToFilter[0];
+            this.dateFilter = this.listTimeToFilter[1];
             this.orderStatusFilter = this.listOrderStatus[0];
             this.moreFilter = false;
             this.showFilter=false;
@@ -282,8 +282,8 @@ export default {
             try{
                 this.moreFilter = false;
                 this.checkFilterHead = false;
-                this.orderStatusFilter = this.listOrderStatus[0];
-                this.dateFilter = this.listTimeToFilter[0];
+                this.orderStatusFilter = this.listOrderStatus[1];
+                this.dateFilter = this.listTimeToFilter[1];
                 await this.getFilterPage();
                 if(this.dataList.data.length > 0){
                     // focus vào ô filter

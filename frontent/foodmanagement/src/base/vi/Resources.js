@@ -269,13 +269,13 @@ const ListTimeToFilter = [{
             endDate: new Date()
         }
     },
-    {
-        text: 'Tháng 1',
-        value: {
-            startDate: new Date(new Date().getFullYear(), 0, 1),
-            endDate: new Date(new Date().getFullYear(), 0, 31)
-        }
-    },
+    // {
+    //     text: 'Tháng 1',
+    //     value: {
+    //         startDate: new Date(new Date().getFullYear(), 0, 1),
+    //         endDate: new Date(new Date().getFullYear(), 0, 31)
+    //     }
+    // },
 ]
 
 // danh sách xưng hô
