@@ -125,7 +125,9 @@ export default {
                 this.$router.push({path: '/app/food-detail/copy', name: 'CopyFoodDetail', params:{copyCode: this.entityDetail.productID}});
             }
             else {
-                this.$router.push({path: '/app/product-detail', name: 'ProductDetail', params:{code: this.entityDetail.productID}});
+                this.$router.push({path: '/app/product-detail-update', name: 'ProductDetailUpdate', params:{code: this.entityDetail.productID}});
+
+                // this.$router.push({path: '/app/product-detail', name: 'ProductDetail', params:{code: this.entityDetail.productID}});
             }
             // else if (this.crud == CRUD.Copy){
             //     this.entityDetail = Object.assign({}, data);

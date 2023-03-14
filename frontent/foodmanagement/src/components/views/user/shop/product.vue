@@ -3,7 +3,10 @@
         <div class="food">
             <div class="food-content flex">
                 <div class="img-food w-1/3 m-r-12 pointer flex-center">
-                    <img :src="this.imagePath + productMerge.product.imageURL" class="w-full" alt="">
+                    <slider :images="['https://cdn.pixabay.com/photo/2015/12/12/15/24/amsterdam-1089646_1280.jpg']"> </slider>
+
+
+                    <!-- <img :src="this.imagePath + productMerge.product.imageURL" class="w-full" alt=""> -->
                     <!-- <span class="sale" v-if="productMerge.product.hasDiscount">Sale!</span> -->
                 </div>
                 <div class="init-food w-2/3">
@@ -43,6 +46,8 @@
                                         :vmodel="typeModel"
                                         :multiple="false">
                             </vue-combobox>
+                            <!-- <slider> :images="["https://cdn.pixabay.com/photo/2015/12/12/15/24/amsterdam-1089646_1280.jpg"]" </slider> -->
+
                             <!-- <vue-combobox @getSelect="changeSize($event)" v-else
                                         :combobox_valid="false" 
                                         :placeholder="''" 
@@ -161,11 +166,13 @@ import ProductAPI from '../../../../api/component/food/ProductAPI';
 import Base from '../../../../base/Base';
 import VueCombobox from '../../../base/VueCombobox.vue';
 import CartDetailAPI from '../../../../api/component/user/CartDetailAPI';
-import CategoryAPI from '../../../../api/component/food/CategoryAPI'
+import CategoryAPI from '../../../../api/component/food/CategoryAPI';
+import Slider from '../../../base/Slider.vue';
 export default {
     name: 'Product',
     components: {
         VueCombobox,
+        Slider,
     },
     data() {
         return {

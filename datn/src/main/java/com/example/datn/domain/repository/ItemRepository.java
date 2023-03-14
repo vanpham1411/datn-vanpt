@@ -30,9 +30,12 @@ public interface ItemRepository extends JpaRepository<Item,Long> {
     @Query("select distinct i.typeID from Item i where i.productID = ?1 ")
     List<Long> getTypeOfProduct(long productID);
 
-    @Query(value = "update item set item.quantity  = item.quantity - :amount where item.item_id = :itemID", nativeQuery = true)
+    @Query(value = "update item set item.quantity  = item.quantity - :amount where item.item_id = :itemID ", nativeQuery = true)
     @Modifying
     int updateQuantity(@Param("amount")int quantity, @Param("itemID") long itemID);
+
+    @Query(value = "select i from Item i where i.itemID = ?1 and  i.quantity >?2" )
+    Item checkQuantity(long itemID, int quantity);
 
     @Query(value = "update item set item.quantity  = item.quantity + :amount where item.item_id = :itemID", nativeQuery = true)
     @Modifying

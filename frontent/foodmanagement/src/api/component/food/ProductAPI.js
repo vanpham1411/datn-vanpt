@@ -56,6 +56,11 @@ class ProductAPI extends BaseAPI {
         return data.data;
     }
 
+    async getAllType() {
+        const  {data} = await BaseAPIConfig.get(`Type/Get`);
+        return data.data
+    }
+
 
 }
 

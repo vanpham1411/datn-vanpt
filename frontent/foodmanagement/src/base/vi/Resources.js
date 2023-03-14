@@ -241,6 +241,44 @@ const DiscountType = [
     { text: 'Mã khuyến mãi cho khách hàng', value: 1 }
 ]
 
+const ListSize = [
+    {
+        // sizeID:1, 
+        size:'XS'},
+    {
+        // sizeID:2,
+        size:'S'},
+    {
+        // sizeID:3,
+         size:'M'},
+    {
+        // sizeID:4, 
+        size:'L'},
+    {
+        // sizeID:5, 
+        size:'XL'},
+    {
+        // sizeID:6, 
+        size:'2XL'},
+    {
+        // sizeID:7, 
+        size:'4XL'},
+    {
+        // sizeID:8, 
+        size:'FreeSize'},
+]
+
+const ListStringSize = [
+    'XS',
+    'S',
+    'M',
+    'L',
+    'XL',
+    '2XL',
+    '3XL',
+    'FreeSize',
+]
+
 const ListTimeToFilter = [{
         text: 'Đầu tháng đến hiện tại',
         value: {
@@ -320,5 +358,7 @@ module.exports = {
     FieldNameViAccount,
     Operation,
     OrderActions,
-    DiscountType
+    DiscountType,
+    ListSize,
+    ListStringSize
 }

@@ -205,11 +205,12 @@ export default {
         /**
          * Đặt lại điều kiện lọc
          */
-         resetFilter(){
+        async resetFilter(){
             this.dateFilter = this.listTimeToFilter[1];
             this.orderStatusFilter = this.listOrderStatus[0];
             this.moreFilter = false;
             this.showFilter=false;
+            this.getFilterPage();
         },
         /**
          * Lay ngày của dateFilter

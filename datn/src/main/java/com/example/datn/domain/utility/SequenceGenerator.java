@@ -14,7 +14,9 @@ public class SequenceGenerator {
     private static final int maxNodeId = (int) (Math.pow(2, NODE_ID_BITS) - 1);
     private static final int maxSequence = (int) (Math.pow(2, SEQUENCE_BITS) - 1);
     // Custom Epoch (December 1, 2022  GTM + 7)
-    private static final long CUSTOM_EPOCH = 1676300576000L;
+    private static final long CUSTOM_EPOCH = 1678595620000L;
+//        1676300576000L;
+
     // INSTANT
     private static SequenceGenerator sequenceGenerator;
     private final int nodeId;

@@ -9,6 +9,7 @@ import Product from '@/components/views/user/shop/product'
 import Cart from '@/components/views/user/cart/cart'
 import OrderUser from '@/components/views/user/order/orderUser'
 import Account from '@/components/views/user/account/account'
+import Slider from '@/components/base/Slider'
 // import BlogList from '@/components/views/user/blog/BlogList'
 // import BlogDetail from '@/components/views/user/blog/BlogDetail'
 
@@ -17,6 +18,7 @@ import HomeAdmin from '@/components/views/admin/home/HomeAdmin'
 import CategoryAdmin from '@/components/views/admin/category/category'
 import ProductAdmin from '@/components/views/admin/product/productAdmin'
 import ProductDetail from '@/components/views/admin/product/productDetail'
+import ProductDetailUpdate from '@/components/views/admin/product/productDetailUpdate'
 import OrderAdmin from '@/components/views/admin/order/orderAdmin'
 import OrderUserDetail from '@/components/views/user/order/orderUserDetail'
 // import BlogAdmin from '@/components/views/admin/manage/blog/BlogAdmin'
@@ -59,8 +61,11 @@ export const routes = [
             { path: 'category', name: 'CategoryAdmin', component: CategoryAdmin },
             { path: 'product', name: 'ProductAdmin', component: ProductAdmin },
             { path: 'product-detail/:code?', name: 'ProductDetail', component: ProductDetail, props: true },
+            { path: 'product-detail-update/:code?', name: 'ProductDetailUpdate', component: ProductDetailUpdate, props: true },
+
             { path: 'order', name: 'OrderAdmin', component: OrderAdmin },
             { path: 'order-detail/:code?', name: 'OrderDetail', component: OrderUserDetail, props: true },
+            { path: 'slider', name:'Slider', component:Slider, props:true},
 //             { path: 'order-detail/copy/:copyCode', name: 'CopyOrderDetail', component: OrderUserDetail, props: true },
 //             { path: 'blog', name: 'BlogAdmin', component: BlogAdmin },
 //             { path: 'access-log', name: 'AccessLog', component: AccessLog },

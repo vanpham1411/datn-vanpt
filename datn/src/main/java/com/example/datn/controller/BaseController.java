@@ -1,5 +1,7 @@
 package com.example.datn.controller;
 
+import com.example.datn.domain.repository.ProductRepository;
+import com.example.datn.service.ProductService;
 import com.example.datn.service.StorageService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +27,8 @@ public class BaseController {
 
     @Autowired
     StorageService storageService;
+    @Autowired
+    ProductService productService;
 
 
     @RequestMapping(value = "/File", method = RequestMethod.POST, consumes = { "multipart/form-data" })
@@ -32,6 +36,24 @@ public class BaseController {
 
         return ResponseEntity.ok(new ResponseBody(
                 storageService.uploadFile(file),
+                ResponseBody.Status.SUCCESS,
+                ResponseBody.Code.SUCCESS
+        ));
+    }
+
+    @GetMapping("/Type/Get")
+    public ResponseEntity getType() {
+        return ResponseEntity.ok(new ResponseBody(
+                productService.getListType(),
+                ResponseBody.Status.SUCCESS,
+                ResponseBody.Code.SUCCESS
+        ));
+    }
+
+    @GetMapping("Size/Get")
+    public ResponseEntity getSize() {
+        return ResponseEntity.ok(new ResponseBody(
+                productService.getListType(),
                 ResponseBody.Status.SUCCESS,
                 ResponseBody.Code.SUCCESS
         ));

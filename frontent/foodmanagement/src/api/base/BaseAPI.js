@@ -97,4 +97,12 @@ export default class BaseAPI {
         const { data } = await BaseAPIConfig.post(`File`, body);
         return data.data
     }
+
+    /**
+     * phuong thuc lay tat ca type
+     */
+    async getAllType() {
+        const  {data} = await BaseAPIConfig.get(`Type/Get`);
+        return data.data
+    }
 }

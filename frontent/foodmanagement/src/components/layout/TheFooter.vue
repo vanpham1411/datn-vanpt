@@ -13,7 +13,7 @@
         </div> -->
         <div class="w-1/2 content-footer center">
             <h3>GIỜ MỞ CỬA</h3>
-            <p>Thứ Hai – Thứ Sáu: 8am – 10pm<br>Cuối tuân: 9am – 9pm</p>
+            <p>Thứ Hai – Thứ Sáu: 8 giờ sáng – 10 giờ tối<br>Cuối tuần: 9 giờ sáng – 9 giờ tối</p>
             <div class="contact-link flex-center">
                 <div class="elementor-grid-item"> 
                     <a class="" href="https://www.facebook.com/opalwordpress/" target="_blank">

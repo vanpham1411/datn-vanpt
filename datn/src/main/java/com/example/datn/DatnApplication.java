@@ -52,6 +52,7 @@ public class DatnApplication implements CommandLineRunner  {
 
     @Override
     public void run(String... args) throws Exception {
+        log.info("get id: " +SequenceGenerator.getInstance().nextId());
 //        List<Long> longs = new ArrayList<>();
 //        longs.add(3L);
 //        longs.add(4L);

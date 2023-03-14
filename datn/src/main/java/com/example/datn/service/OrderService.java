@@ -37,12 +37,18 @@ public class OrderService {
     @Autowired
     SuggestUserRepository suggestUserRepository;
 
-    public int createOrder(OrderModel orderModel){
+    public List<Long> createOrder(OrderModel orderModel){
+        List<Long> res = new ArrayList<>();
         long orderID = SequenceGenerator.getInstance().nextId();
         Order order = orderModel.getOrder();
         order.setOrderID(orderID);
         order.setCreateTime(new Timestamp(System.currentTimeMillis()));
         List<OrderItem> orderItemList = new ArrayList<>();
+        orderModel.getOrderDetails().forEach(orderDetail -> {
+            Item i = itemRepository.checkQuantity(orderDetail.getItemID(), orderDetail.getQuantity());
+            if( i == null) res.add(orderDetail.getItemID());
+        });
+        if(res.size()>0) return res;
         orderModel.getOrderDetails().forEach(orderDetail -> {
             OrderItem orderItem = OrderItem.builder()
                     .id(SequenceGenerator.getInstance().nextId())
@@ -56,7 +62,7 @@ public class OrderService {
         orderRepository.save(order);
         orderItemRepository.saveAll(orderItemList);
         cartItemRepository.deleteAllByUserID(orderModel.getOrder().getUserID());
-        return 1;
+        return res;
 
     }
 

@@ -68,7 +68,7 @@
             </div>
         </div>
         <div class="btn-login center">
-            <button class="btn-submit" @click="login()">Next</button>
+            <button class="btn-submit" @click="login()">Tiếp</button>
         </div>
     </div>
     <div>
@@ -268,8 +268,9 @@ export default {
                                     console.log(result);
                                     //this.$router.push({path: this.prevRoute.path});
                                 }
+                                console.log("route: ", this.prevRoute.name)
 
-                                if(!this.prevRoute || this.prevRoute.name.includes('Admin')) {
+                                if(!this.prevRoute || this.prevRoute.name.includes('Admin')|| this.prevRoute.path.includes('product-detail-update')) {
                                     this.$router.push({path:  '/' })
                                 }
                                 else this.$router.push({path:  this.prevRoute.path })

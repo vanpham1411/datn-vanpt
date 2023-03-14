@@ -78,7 +78,7 @@
                     Thành tiền: <b style="color:var(--primary-color);" :id="'amountFood'+index">{{data.realAmount}}</b>
                 </div>
                 <div class="w-1/8 m-l-12 cart-action center">
-                    <div><button @click="crud='put';crudObject(data, index)" :id="'update'+index">Cập nhật</button></div>
+                    <div><button @click="crud='put';crudObject(data.cartItem, index)" :id="'update'+index">Cập nhật</button></div>
                     <div><button @click="crud='delete';crudObject(data.cartItem)">Xóa</button></div>
                 </div>
             </div>
@@ -148,6 +148,13 @@ export default {
         }
     },
     methods: {
+        calculateAllAmount() {
+            this.allAmount = 0;
+            this.listCart.forEach((ele, index) => {
+                this.allAmount += ele.productItem.product.cost * ele.cartItem.quantity
+                this.caculateAmount(ele, "load", index);
+            });
+        },
         formatNumber(val) {
             return Base.formatNumber(val);
         },
@@ -215,15 +222,21 @@ export default {
                         var { data } = await CartDetailAPI.deleteMultiObj([obj]);
                         console.log(data);
                         await this.getListCart();
+                        if(this.listCart.length == 0) {
+                            this.allAmount = 0;
+                        }
                         this.listCart.forEach((ele, index) => {
                             this.caculateAmount(ele, "load", index);
                         });
+                        this.calculateAllAmount();
                         break;
                     case CRUD.Put:
                         var res = await CartDetailAPI.putObj(obj);
                         if(res.status == 200){
-                            //await this.getListCart();
                             document.getElementById("update"+index).disabled = true;
+                            await this.getListCart();
+                            document.getElementById("update"+index).disabled = false;
+                            this.calculateAllAmount();
                         }
                         break;
                     default:

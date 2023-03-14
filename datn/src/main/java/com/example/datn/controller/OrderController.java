@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 public class OrderController {
@@ -26,10 +28,17 @@ public class OrderController {
 
     @PostMapping("/Order/AddOrder")
     public ResponseEntity post(@RequestBody OrderModel orderModel) {
+        List<Long> res = orderService.createOrder(orderModel);
+        if(res.size() == 0)
         return ResponseEntity.ok(new ResponseBody(
-                orderService.createOrder(orderModel),
+                res,
                 ResponseBody.Status.SUCCESS,
                 ResponseBody.Code.SUCCESS
+        ));
+        else return ResponseEntity.ok(new ResponseBody(
+                res,
+                ResponseBody.Status.FAILED,
+                ResponseBody.Code.INTERNAL_ERROR
         ));
     }
 

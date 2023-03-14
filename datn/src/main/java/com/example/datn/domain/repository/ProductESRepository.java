@@ -28,6 +28,8 @@ import org.elasticsearch.search.aggregations.bucket.terms.ParsedStringTerms;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
+import org.elasticsearch.search.sort.FieldSortBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.stereotype.Component;
@@ -159,6 +161,7 @@ public class ProductESRepository {
          boolQueryBuilder.must(QueryBuilders.termQuery("status",0));
         searchSourceBuilder.size(limit);
         searchSourceBuilder.from(offset);
+        searchSourceBuilder.sort(new FieldSortBuilder("updateTime").order(SortOrder.DESC));
         searchSourceBuilder.query(boolQueryBuilder);
 
         SearchRequest searchRequest= new SearchRequest(INDEX_NAME);

@@ -344,6 +344,7 @@ export default {
         document.querySelectorAll('.combobox input').forEach(x => x.setAttribute('readonly', true));
     },
     created(){
+        // console.log("get v-combo: ", this.itemText)
         if(typeof(this.item_text)=='string'){
             this.item_show = this.item_text;
         }

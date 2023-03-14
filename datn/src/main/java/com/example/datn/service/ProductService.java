@@ -209,8 +209,12 @@ public class ProductService {
         for (ItemModel itemModel : productItem.getItems()) {
             long itemID = SequenceGenerator.getInstance().nextId();
             Type type = itemModel.getType();
-            long typeID = SequenceGenerator.getInstance().nextId();
-            type.setTypeID(typeID);
+            long typeID ;
+            if(type.getTypeID() != null && type.getTypeID() != 0) {
+                 typeID = SequenceGenerator.getInstance().nextId();
+                type.setTypeID(typeID);
+
+            } else typeID = type.getTypeID();
             Item item = Item.builder()
                     .itemID(itemID)
                     .productID(productID)
@@ -263,5 +267,9 @@ public class ProductService {
      public Type getType(long typeID) {
 
         return typeRepository.findById(typeID).get();
+     }
+
+     public List<Type> getListType() {
+        return typeRepository.findType();
      }
 }
